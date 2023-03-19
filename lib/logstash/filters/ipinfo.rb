@@ -4,8 +4,8 @@ require 'down'
 require 'maxminddb'
 # require 'open-uri'
 # require "fileutils"
-$MMDB_FILE_DOWNLOAD_URL = "https://ipinfo.io/data/free/country.mmdb?token=4ca1f6f7f6a4ae"
-$MMDB_FILE_NAME = "country.mmdb"
+$MMDB_FILE_DOWNLOAD_URL = "https://ipinfo.io/data/free/country_asn.mmdb?token=4ca1f6f7f6a4ae"
+$MMDB_FILE_NAME = "country_asn.mmdb"
 # This ipinfo filter will replace the contents of the default
 # message field with whatever you specify in the configuration.
 #
