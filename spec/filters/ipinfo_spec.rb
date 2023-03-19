@@ -13,7 +13,7 @@ describe LogStash::Filters::Ipinfo do
     CONFIG
 
     sample("ip" => "173.9.34.107") do
-      insist { subject.get("ipinfo") }.include?("country")
+      expect ( subject.get("country")) == 'US'
     end
   end
 end
