@@ -2,10 +2,10 @@
 require "logstash/filters/base"
 require 'down'
 require 'maxminddb'
-# require 'open-uri'
-# require "fileutils"
+
 $MMDB_FILE_DOWNLOAD_URL = "https://ipinfo.io/data/free/country_asn.mmdb?token=4ca1f6f7f6a4ae"
 $MMDB_FILE_NAME = "country_asn.mmdb"
+
 # This ipinfo filter will replace the contents of the default
 # message field with whatever you specify in the configuration.
 #
@@ -23,21 +23,22 @@ class LogStash::Filters::Ipinfo < LogStash::Filters::Base
   #
   config_name "ipinfo"
 
-  # The field containing the IP address or hostname to map via ipinfo. If
-  # this field is an array, only the first value will be used.
+  # The field containing the IP address or hostname to map via ipinfo.io. 
   config :source, :validate => :string, :required => true
 
-  # The field to write the JSON into. If not specified, the source
-  # field will be overwritten.
+  # The field to write the lookup results into. If not specified, the default
+  # value will be used.
   config :target, :validate => :string, :default => "ipinfo"
 
   # Tags the event on failure to look up ipinfo information. This can be used in later analysis.
+  # If not specified, the default value will be used.
   config :tag_on_failure, :validate => :array, :default => ["_ipinfo_lookup_failure"]
 
   public
   def register
     # Add instance variables
     setup_database
+
   end # def register
 
   public
@@ -59,7 +60,9 @@ class LogStash::Filters::Ipinfo < LogStash::Filters::Base
     @tag_on_failure.each{|tag| event.tag(tag)}
   end
 
+  # Download .mmdb file and load it into mmdb reader
   def setup_database
+    # Download mmdb file from ipinfo.io if not found
     if !File.exist?($MMDB_FILE_NAME)
       tempfile = Down.download($MMDB_FILE_DOWNLOAD_URL)
       FileUtils.mv(tempfile.path, "./#{tempfile.original_filename}")
