@@ -3,7 +3,7 @@ require "logstash/filters/base"
 require 'down'
 require 'maxminddb'
 
-$MMDB_FILE_DOWNLOAD_URL = "https://ipinfo.io/data/free/country_asn.mmdb?token=4ca1f6f7f6a4ae"
+$MMDB_FILE_DOWNLOAD_URL = "https://ipinfo.io/data/free/country_asn.mmdb?token=c0c038dbe0e4e7"
 $MMDB_FILE_NAME = "country_asn.mmdb"
 
 # This ipinfo filter will replace the contents of the default
