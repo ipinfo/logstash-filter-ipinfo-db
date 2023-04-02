@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gemspec
 
-gem 'maxminddb'
+gem 'maxmind-db'
 gem 'down'
 logstash_path = ENV['LOGSTASH_PATH'] || '/usr/share/logstash'
 

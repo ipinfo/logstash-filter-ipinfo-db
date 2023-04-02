@@ -1,7 +1,7 @@
 # encoding: utf-8
 require "logstash/filters/base"
 require 'down'
-require 'maxminddb'
+require 'maxmind/db'
 
 $MMDB_FILE_DOWNLOAD_URL = "https://ipinfo.io/data/free/country_asn.mmdb?token=c0c038dbe0e4e7"
 $MMDB_FILE_NAME = "country_asn.mmdb"
@@ -45,7 +45,7 @@ class LogStash::Filters::Ipinfo < LogStash::Filters::Base
     ip = event.get(@source)
 
     begin
-      ret = @db.lookup(ip)
+      ret = @db.get(ip)
       event.set(@target, ret.to_hash)
       filter_matched(event)
     rescue => e
@@ -66,7 +66,7 @@ class LogStash::Filters::Ipinfo < LogStash::Filters::Base
       FileUtils.mv(tempfile.path, "./#{tempfile.original_filename}")
     end
     # Load .mmdb file in MaxMindDB reader
-    @db = MaxMindDB.new("./#{$MMDB_FILE_NAME}", MaxMindDB::LOW_MEMORY_FILE_READER)
+    @db = MaxMind::DB.new($MMDB_FILE_NAME, mode: MaxMind::DB::MODE_MEMORY)
   end
 
 end # class LogStash::Filters::Ipinfo
