@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
   s.name          = 'logstash-filter-ipinfo'
   s.version       = '0.1.2'
   s.licenses      = ['Apache-2.0']
-  s.summary       = 'Logstash Filter Plugin for Ipinfo'
+  s.summary       = 'Logstash Filter Plugin for IPinfo'
   s.description   = ''
   s.homepage      = 'https://ipinfo.io'
   s.authors       = ['Muhammad Awais Murad']

@@ -36,9 +36,7 @@ class LogStash::Filters::Ipinfo < LogStash::Filters::Base
 
   public
   def register
-    # Add instance variables
     setup_database
-
   end # def register
 
   public
@@ -53,7 +51,7 @@ class LogStash::Filters::Ipinfo < LogStash::Filters::Base
     rescue => e
       tag_unsuccessful_lookup(event)
     end
-  end # def filter
+  end
 
   def tag_unsuccessful_lookup(event)
     @logger.debug? && @logger.debug("IP #{event.get(@source)} was not found in the database", :event => event)
