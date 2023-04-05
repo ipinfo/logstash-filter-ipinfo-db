@@ -17,7 +17,7 @@ class LogStash::Filters::Ipinfo < LogStash::Filters::Base
   #
   # filter {
   #   ipinfo {
-  #     message => "My message..."
+  #     source => "ip"
   #   }
   # }
   #
