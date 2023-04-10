@@ -6,33 +6,33 @@ require 'maxmind/db'
 $MMDB_FILE_DOWNLOAD_URL = "https://ipinfo.io/data/free/country_asn.mmdb?token=c0c038dbe0e4e7"
 $MMDB_FILE_NAME = "country_asn.mmdb"
 
-# This ipinfo filter will replace the contents of the default
+# This ipinfo-db filter will replace the contents of the default
 # message field with whatever you specify in the configuration.
 #
-# It is only intended to be used as an ipinfo.
-class LogStash::Filters::Ipinfo < LogStash::Filters::Base
+# It is only intended to be used as an ipinfo-db.
+class LogStash::Filters::IpinfoDb < LogStash::Filters::Base
 
   # Setting the config_name here is required. This is how you
   # configure this filter from your Logstash config.
   #
   # filter {
-  #   ipinfo {
-  #     source => "ip"
+  #   ipinfo-db {
+  #      source => "ip"
   #   }
   # }
   #
-  config_name "ipinfo"
+  config_name "ipinfo-db"
 
   # The field containing the IP address or hostname to map via ipinfo.io. 
   config :source, :validate => :string, :required => true
 
   # The field to write the lookup results into. If not specified, the default
   # value will be used.
-  config :target, :validate => :string, :default => "ipinfo"
+  config :target, :validate => :string, :default => "ipinfo-db"
 
   # Tags the event on failure to look up ipinfo information. This can be used in later analysis.
   # If not specified, the default value will be used.
-  config :tag_on_failure, :validate => :array, :default => ["_ipinfo_lookup_failure"]
+  config :tag_on_failure, :validate => :array, :default => ["_ipinfo_db_lookup_failure"]
 
   public
   def register
@@ -41,7 +41,7 @@ class LogStash::Filters::Ipinfo < LogStash::Filters::Base
 
   public
   def filter(event)
-    @logger.debug? && @logger.debug("Running ipinfo lookup", :event => event)
+    @logger.debug? && @logger.debug("Running ipinfo-db lookup", :event => event)
     ip = event.get(@source)
 
     begin
@@ -69,4 +69,4 @@ class LogStash::Filters::Ipinfo < LogStash::Filters::Base
     @db = MaxMind::DB.new($MMDB_FILE_NAME, mode: MaxMind::DB::MODE_MEMORY)
   end
 
-end # class LogStash::Filters::Ipinfo
+end # class LogStash::Filters::IpinfoDB
